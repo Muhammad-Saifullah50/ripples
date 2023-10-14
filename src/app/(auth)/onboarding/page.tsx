@@ -1,4 +1,5 @@
 import { AccountProfile } from '@/components/forms'
+import { useUploadThing } from '@/lib/uploadthing'
 import { currentUser } from '@clerk/nextjs'
 import React from 'react'
 
