@@ -32,12 +32,12 @@ export function formatDateString(dateString: string) {
 }
 
 // created by chatgpt
-export function formatThreadCount(count: number): string {
+export function formatRippleCount(count: number): string {
   if (count === 0) {
-    return "No Threads";
+    return "No Ripples";
   } else {
-    const threadCount = count.toString().padStart(2, "0");
-    const threadWord = count === 1 ? "Thread" : "Threads";
-    return `${threadCount} ${threadWord}`;
+    const rippleCount = count.toString().padStart(2, "0");
+    const rippleWord = count === 1 ? "Ripple" : "Ripples";
+    return `${rippleCount} ${rippleWord}`;
   }
 }
