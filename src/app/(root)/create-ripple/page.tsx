@@ -1,4 +1,4 @@
-import PostRipple from "@/components/forms/PostRipple"
+import { PostRipple } from "@/components/forms"
 import { fetchUser } from "@/lib/actions/user.actions"
 import { currentUser } from "@clerk/nextjs"
 import { redirect } from 'next/navigation'
@@ -14,7 +14,7 @@ const CreateRipplePage = async () => {
     return (
         <>
             <h1 className='head-text'>Create Ripple</h1>
-            <PostRipple UserId={userInfo?._id}/>
+            <PostRipple UserId={userInfo?._id} />
         </>)
 }
 

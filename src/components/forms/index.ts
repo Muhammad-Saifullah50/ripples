@@ -1,3 +1,9 @@
 import AccountProfile from "./AccountProfile";
+import Comment from "./Comment";
+import PostRipple from "./PostRipple";
 
-export {AccountProfile}
+export {
+    AccountProfile,
+    PostRipple,
+    Comment
+}

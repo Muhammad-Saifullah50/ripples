@@ -24,9 +24,10 @@ interface Props {
   }[],
   isComment?: boolean
 }
-const RippleCard = ({ id, currentUserId, parentId, content, author, community, createdAt, comments }: Props) => {
+const RippleCard = ({ id, currentUserId, parentId, content, author, community, createdAt, comments, isComment }: Props) => {
   return (
-    <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
+    <article className={`flex w-full flex-col rounded-xl  
+    ${isComment ? 'px-0 xs:px-7 mt-3 ' : 'bg-dark-2 p-7'}`}>
 
       <div className="flex items-start justify-between">
         <div className="flex flex-1 w-full flex-row gap-4">
@@ -59,7 +60,7 @@ const RippleCard = ({ id, currentUserId, parentId, content, author, community, c
                   height={24}
                   className="cursor-pointer object-contain"
                 />
-                <Link href={`/thread/${id}`}>
+                <Link href={`/ripple/${id}`}>
                   <Image
                     src='/assets/reply.svg'
                     alt="reply"
@@ -84,6 +85,12 @@ const RippleCard = ({ id, currentUserId, parentId, content, author, community, c
                   className="cursor-pointer object-contain"
                 />
               </div>
+
+              {isComment && comments.length > 0 && (
+                <Link href={`/ripple/${id}`}>
+                  <p className="mt-1 text-subtle-medium text-gray-1">{comments.length} replies</p>
+                </Link>
+              )}
             </div>
           </div>
         </div>
