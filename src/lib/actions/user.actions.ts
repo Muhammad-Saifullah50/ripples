@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache"
 import User from "../models/user.model"
 import { connectToDB } from "../mongoose"
+import Ripple from "../models/ripple.model"
 
 interface Params {
     userId: string,
@@ -42,14 +43,37 @@ export const fetchUser = async (userId: string) => {
     try {
         connectToDB()
 
-     const CurrUser = await User
-        .findOne({id : userId})
+        const CurrUser = await User
+            .findOne({ id: userId })
         // .populate({
         //     path: 'communities',
         //     model: Community
         // })
         return CurrUser
     } catch (error: any) {
-throw new Error(`Failed to fetch user ${error?.message}`)
+        throw new Error(`Failed to fetch user ${error?.message}`)
+    }
+}
+
+export const fetchUserPosts = async (userId: string) => {
+    try {
+        connectToDB()
+        const ripples = await User.findOne({ id: userId })
+            .populate({
+                path: 'ripples',
+                model: Ripple,
+                populate: ({
+                    path: 'children',
+                    model: Ripple,
+                    populate: ({
+                        path: 'author',
+                        model: User,
+                        select: 'name image id'
+                    })
+                })
+            })
+            return ripples
+    } catch (error: any) {
+throw new Error(`Failed to fetch posts ${error?.message}`)
     }
 }

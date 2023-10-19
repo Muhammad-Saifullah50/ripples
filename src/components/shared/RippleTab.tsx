@@ -1,11 +1,35 @@
+import { fetchUserPosts } from "@/lib/actions/user.actions"
+import { redirect } from "next/navigation"
+import RippleCard from "../cards/RippleCard"
+
 interface Props {
     currentUserId: string
     accountId: string
     accountType: string
 }
 const RippleTab = async ({ currentUserId, accountId, accountType }: Props) => {
+    let result = await fetchUserPosts(accountId)
+    if (!result) redirect('/')
     return (
-        <div>ThreadsTab</div>
+        <section className="mt-9 flex flex-col gap-10">
+            {result.ripples.map((ripple: any) => (
+                <RippleCard
+                    key={ripple?._id}
+                    id={ripple?._id}
+                    currentUserId={currentUserId}
+                    parentId={ripple?.parentId}
+                    content={ripple.text}
+                    author={
+                        accountType === 'User'
+                            ? { name: result.name, image: result.image, id: result.id }
+                            : { name: ripple.author.name, image: ripple.author.image, id: ripple.author.id }
+                    }
+                    community={ripple?.community}
+                    createdAt={ripple?.createdAt}
+                    comments={ripple?.children}
+                />
+            ))}
+        </section>
     )
 }
 
