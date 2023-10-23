@@ -17,6 +17,8 @@ import { Textarea } from "../ui/textarea"
 import { usePathname, useRouter } from "next/navigation"
 import { RippleValidationSchema } from "@/lib/validations/ripple"
 import { createRipple } from "@/lib/actions/ripple.actions"
+import { RotatingLines } from 'react-loader-spinner'
+import { useState } from "react"
 // import { UpdateUser } from "@/lib/actions/user.actions"
 // import { UserValidationSchema } from "@/lib/validations/user"
 
@@ -24,6 +26,7 @@ const PostRipple = ({ UserId }: { UserId: string }) => {
 
     const router = useRouter()
     const pathName = usePathname()
+    const [loading, setloading] = useState(false)
 
     const form = useForm({
         resolver: zodResolver(RippleValidationSchema),
@@ -35,13 +38,22 @@ const PostRipple = ({ UserId }: { UserId: string }) => {
 
 
     const onSubmit = async (values: z.infer<typeof RippleValidationSchema>) => {
-        await createRipple({
-            text: values.ripple,
-            author: UserId,
-            communityId: null,
-            path: pathName
-        })
-        router.push('/')
+        try {
+            setloading(true)
+            await createRipple({
+                text: values.ripple,
+                author: UserId,
+                communityId: null,
+                path: pathName
+            })
+            router.push('/')
+        } catch (error) {
+            throw new Error('Failed to create ripple')
+        }
+        finally {
+            setloading(false)
+        }
+
     }
     return (
         <Form {...form}>
@@ -67,7 +79,18 @@ const PostRipple = ({ UserId }: { UserId: string }) => {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="bg-primary-500">Post Ripple</Button>
+                <Button
+                    type="submit"
+                    className={`flex gap-2 ${loading ? '' : 'bg-primary-500 '}`}>
+                    {loading ? 'Posting Ripple' : 'Post Ripple' }
+                    {loading && <RotatingLines
+                        strokeColor="grey"
+                        strokeWidth="4"
+                        animationDuration="1"
+                        width="24"
+                        visible={true}
+                    />}
+                </Button>
             </form>
 
         </Form >)

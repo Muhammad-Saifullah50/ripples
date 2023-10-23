@@ -45,8 +45,9 @@ const RippleCard = ({ id, currentUserId, parentId, content, author, community, c
           </div>
 
           <div className="flex w-full flex-col">
-            <Link href={`/profile/${author?.id}`} className="w-fit">
+            <Link href={`/profile/${author?.id}`} className="w-fit flex gap-10">
               <h4 className="cursor-pointer text-base-semibold text-light-1">{author.name}</h4>
+              <p className="text-gray-600 text-small-regular">{createdAt.toString().slice(15,21)}</p>
             </Link>
 
             <p className="mt-2 text-small-regular text-light-2">{content}</p>

@@ -77,3 +77,11 @@ export const fetchUserPosts = async (userId: string) => {
 throw new Error(`Failed to fetch posts ${error?.message}`)
     }
 }
+
+export const fetchUsers = async () => {
+    try {
+        connectToDB()
+    } catch (error) {
+        
+    }
+}
