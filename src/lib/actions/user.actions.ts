@@ -128,3 +128,30 @@ export const fetchUsers = async ({
         throw new Error(`Failed to fetch users ${error?.message}`)
     }
 }
+
+export const getActivity = async (userId: string) => {
+    try {
+        connectToDB()
+
+        // find all ripples created by the user
+        const userRipples = await Ripple.find({ author: userId })
+
+        // collect all the child ripple ids (replies) fom the children field
+        const childRippleIds = userRipples.reduce((acc, userRipple) => {
+            return acc.concat(userRipple.children)
+        }, [])
+
+        const replies = await Ripple.find({
+            _id: {$in: childRippleIds},
+            author: {$ne: userId}
+        }).populate({
+            path: 'author',
+            model: User,
+            select: 'name image _id'
+        })
+
+        return replies
+    } catch (error: any) {
+        throw new Error(`Failed to fetch activity ${error?.message}`)
+    }
+}
