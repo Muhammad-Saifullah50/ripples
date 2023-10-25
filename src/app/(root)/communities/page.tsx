@@ -1,8 +1,10 @@
 
 const CommunityPage = () => {
-    return (
-      <section className="head-text mb-10">Communities</section>
-    )
-  }
-  
-  export default CommunityPage
+  return (
+    <section>
+      <h1 className="head-text mb-10">Communities</h1>
+    </section>
+  )
+}
+
+export default CommunityPage

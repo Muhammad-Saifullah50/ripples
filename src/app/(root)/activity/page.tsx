@@ -35,7 +35,7 @@ const ActivityPage = async () => {
                   <p className="!text-small-regular text-light-1 ">
                     <span className="mr-1 text-primary-500">{activity.author.name}</span>{' '} replied to your ripple {' '} at {' '}
                     
-                    <span className="!text-small-regular text-gray-600">{activity.createdAt.toLocaleString()}</span>
+                    <span className="!text-small-medium text-gray-600">{activity.createdAt.toLocaleString()}</span>
                   </p>
                 </article>
               </Link>
