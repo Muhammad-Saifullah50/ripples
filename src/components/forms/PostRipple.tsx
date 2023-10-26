@@ -19,6 +19,7 @@ import { RippleValidationSchema } from "@/lib/validations/ripple"
 import { createRipple } from "@/lib/actions/ripple.actions"
 import { RotatingLines } from 'react-loader-spinner'
 import { useState } from "react"
+import { useOrganization } from "@clerk/nextjs"
 // import { UpdateUser } from "@/lib/actions/user.actions"
 // import { UserValidationSchema } from "@/lib/validations/user"
 
@@ -27,6 +28,7 @@ const PostRipple = ({ UserId }: { UserId: string }) => {
     const router = useRouter()
     const pathName = usePathname()
     const [loading, setloading] = useState(false)
+    const {organization} = useOrganization()
 
     const form = useForm({
         resolver: zodResolver(RippleValidationSchema),
@@ -39,11 +41,12 @@ const PostRipple = ({ UserId }: { UserId: string }) => {
 
     const onSubmit = async (values: z.infer<typeof RippleValidationSchema>) => {
         try {
+            console.log(organization)
             setloading(true)
-            await createRipple({
+                        await createRipple({
                 text: values.ripple,
                 author: UserId,
-                communityId: null,
+                communityId: organization ? organization.id : null,
                 path: pathName
             })
             router.push('/')

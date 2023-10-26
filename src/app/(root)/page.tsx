@@ -1,9 +1,9 @@
 import RippleCard from "@/components/cards/RippleCard"
-import { fetchRipples } from "@/lib/actions/ripple.actions"
+import { fetchPosts } from "@/lib/actions/ripple.actions"
 import { currentUser } from '@clerk/nextjs'
 
 export default async function Home() {
-  const result = await fetchRipples(1, 30)
+  const result = await fetchPosts(1, 30)
   const user = await currentUser()
   return (
     <>
@@ -14,20 +14,22 @@ export default async function Home() {
           <p className="no-result">No ripples found</p>
         ) : (
           <>
-            {result?.posts.map((post) => (
-              <RippleCard
-                key={post?._id}
-                id={post?._id}
-                currentUserId={user?.id || ''}
-                parentId={post?.parentId}
-                content={post.text}
-                author={post?.author}
-                community={post?.community}
-                createdAt={post?.createdAt}
-                comments={post?.children}
-              />
-            
-            ))}
+            {result?.posts.map((post) => {
+              return (
+                <RippleCard
+                  key={post?._id}
+                  id={post?._id}
+                  currentUserId={user?.id || ''}
+                  parentId={post?.parentId}
+                  content={post.text}
+                  author={post?.author}
+                  community={post?.community}
+                  createdAt={post?.createdAt}
+                  comments={post?.children}
+                />
+
+              )
+            })}
           </>
         )}
       </section>

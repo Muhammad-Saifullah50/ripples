@@ -21,7 +21,7 @@ import { Textarea } from "../ui/textarea"
 import { useState } from 'react'
 import { isBase64Image } from "@/lib/utils"
 import { useUploadThing } from "@/lib/uploadthing"
-import { UpdateUser } from "@/lib/actions/user.actions"
+import { updateUser } from "@/lib/actions/user.actions"
 import { usePathname, useRouter } from "next/navigation"
 
 interface Props {
@@ -86,7 +86,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
             }
         }
 
-        await UpdateUser({
+        await updateUser({
             userId: user.id,
             username: values?.username,
             name: values.name,

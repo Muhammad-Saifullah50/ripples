@@ -32,11 +32,14 @@ const ActivityPage = async () => {
                     className="object-cover rounded-full"
                   />
 
-                  <p className="!text-small-regular text-light-1 ">
-                    <span className="mr-1 text-primary-500">{activity.author.name}</span>{' '} replied to your ripple {' '} at {' '}
-                    
-                    <span className="!text-small-medium text-gray-600">{activity.createdAt.toLocaleString()}</span>
+                  <p className="!text-small-regular text-light-1 flex gap-2">
+                    <span className="mr-1 text-primary-500">{activity.author.name}</span>{' '}
+                    replied to your ripple at{' '}
+                    <span className="!text-small-medium text-gray-600">
+                      {activity.createdAt.toLocaleString().slice(11, 16) + (activity.createdAt.toLocaleString().slice(-2) === 'AM' ? ' AM' : ' PM')}
+                    </span>
                   </p>
+
                 </article>
               </Link>
             ))}
@@ -45,7 +48,7 @@ const ActivityPage = async () => {
           <p className="!text-base-regular text-light-3">No activity found</p>
         )}
       </section>
-    </section>
+    </section >
   )
 }
 

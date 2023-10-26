@@ -1,3 +1,4 @@
+import { formatDateString } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -47,7 +48,8 @@ const RippleCard = ({ id, currentUserId, parentId, content, author, community, c
           <div className="flex w-full flex-col">
             <Link href={`/profile/${author?.id}`} className="w-fit flex gap-10">
               <h4 className="cursor-pointer text-base-semibold text-light-1">{author.name}</h4>
-              <p className="text-gray-600 text-small-regular">{createdAt.toString().slice(15,21)}</p>
+              <p className="text-gray-600 text-small-regular">{createdAt.toLocaleString().slice(11, 16) + (createdAt.toLocaleString().slice(-2) === 'AM' ? ' AM' : ' PM')}</p>
+
             </Link>
 
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
@@ -96,6 +98,22 @@ const RippleCard = ({ id, currentUserId, parentId, content, author, community, c
           </div>
         </div>
       </div>
+      {!isComment && community && (
+          <Link
+            href={`/communities/${community?.id}`}
+            className="mt-5 flex items-center">
+            <p className="text-subtle-medium text-gray-1">
+              {formatDateString(createdAt)}  {' '}- {community?.name} Community
+            </p>
+            <Image
+              src={community.image}
+              alt="image"
+              width={14}
+              height={14}
+              className="object-cover rounded-full ml-1"
+            />
+          </Link>
+        )}
     </article>
   )
 }
