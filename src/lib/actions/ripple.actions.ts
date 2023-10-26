@@ -238,3 +238,16 @@ export async function addCommentToRipple(
     throw new Error("Unable to add comment");
   }
 }
+
+export const getCommentOfUser = async (userId:string) => {
+  try {
+    connectToDB()
+
+    const comments = await Ripple.find({author: userId})
+
+    
+    return comments
+  } catch (error:any) {
+    throw new Error(`Failed to fetch comments: ${error.message}`)
+  }
+}
