@@ -1,9 +1,10 @@
 import RippleCard from "@/components/cards/RippleCard"
+import Pagination from "@/components/shared/Pagination"
 import { fetchPosts } from "@/lib/actions/ripple.actions"
 import { currentUser } from '@clerk/nextjs'
 
-export default async function Home() {
-  const result = await fetchPosts(1, 30)
+export default async function Home({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+  const result = await fetchPosts(searchParams?.page ? +searchParams?.page : 1, 20)
   const user = await currentUser()
   return (
     <>
@@ -33,6 +34,12 @@ export default async function Home() {
           </>
         )}
       </section>
+
+      <Pagination
+        path="/"
+        pageNumber={searchParams?.page ? + searchParams?.page : 1}
+        isNext={result?.isNext}
+      />
     </>
   )
 }

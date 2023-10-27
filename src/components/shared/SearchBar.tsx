@@ -12,7 +12,7 @@ const SearchBar = ({ routeType }: Props) => {
 
     const [search, setSearch] = useState('')
     const router = useRouter()
-
+    
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
           if (search) {
@@ -30,7 +30,8 @@ const SearchBar = ({ routeType }: Props) => {
         <div className="w-full flex gap-2 justify-center items-center searchbar">
             <Input
                 value={search}
-                className=" no-focus searchbar_input bg-dark-2 text-light-1" placeholder={`${routeType !== '/search' ? 'Search Communities...' : 'Search Creators...'}`}
+                className=" no-focus searchbar_input bg-dark-2 text-light-1" 
+                placeholder={`${routeType !== 'search' ? 'Search Communities...' : 'Search Creators...'}`}
                 onChange={(e) => setSearch(e.target.value)}
             />
            

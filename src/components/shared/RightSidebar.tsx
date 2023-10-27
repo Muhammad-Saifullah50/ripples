@@ -12,34 +12,25 @@ const RightSidebar = async () => {
   if (!user) return null
 
   const userInfo = await fetchUser(user.id)
-  console.log(userInfo)
 
   if (!userInfo?.onboarded) redirect('/onboarding')
 
-  // fetch all communities
-  const communityResult = await fetchCommunities({
-    searchString: '',
-    pageNumber: 1,
-    pageSize: 25
-  })
+  const suggestedCommunities = await fetchCommunities({ pageSize: 4 })
 
-  const userResult = await fetchUsers({
+  const suggestedUsers = await fetchUsers({
     userId: user.id,
-    searchString: '',
-    pageNumber: 1,
-    pageSize: 25
+    pageSize: 4
   })
-
   return (
     <section className='custom-scrollbar rightsidebar'>
       <div className='flex flex-1 flex-col justify-start'>
         <h3 className='text-heading4-medium text-light-1'>Suggested Communities</h3>
         <div className='flex flex-col gap-4 mt-4'>
-          {communityResult.communities.length === 0 ? (
+          {suggestedCommunities.communities.length === 0 ? (
             <p className="no-result">No communities found</p>
           ) : (
             <>
-              {communityResult.communities.map((community) => (
+              {suggestedCommunities.communities.map((community) => (
                 <CommunityCard
                   key={community.id}
                   id={community.id}
@@ -58,7 +49,7 @@ const RightSidebar = async () => {
       <div className='flex flex-1 flex-col justify-start'>
         <h3 className='text-heading4-medium text-light-1'>Suggested Users</h3>
         <div className='flex flex-col gap-4 mt-4'>
-          {userResult.users.map((person) => (
+          {suggestedUsers.users.map((person) => (
             <UserCard
               key={person.id}
               id={person.id}

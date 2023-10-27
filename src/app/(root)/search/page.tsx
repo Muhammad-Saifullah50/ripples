@@ -1,4 +1,5 @@
 import UserCard from "@/components/cards/UserCard"
+import Pagination from "@/components/shared/Pagination"
 import SearchBar from "@/components/shared/SearchBar"
 import { fetchUser, fetchUsers } from "@/lib/actions/user.actions"
 import { currentUser } from "@clerk/nextjs"
@@ -17,8 +18,8 @@ console.log(searchParams)
   const result = await fetchUsers({
     userId: user.id,
     searchString: searchParams?.q || '',
-    pageNumber: 1,
-    pageSize: 25
+    pageNumber: searchParams?.page ? +searchParams?.page : 1,
+    pageSize: 15
   })
   return (
     <section>
@@ -44,6 +45,12 @@ console.log(searchParams)
           </>
         )}
       </div>
+
+      <Pagination
+      pageNumber={searchParams?.page ? +searchParams?.page : 1}
+      path="search"
+      isNext={result?.isNext}
+            />
     </section>
   )
 }

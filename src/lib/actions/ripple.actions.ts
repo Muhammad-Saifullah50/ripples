@@ -5,8 +5,9 @@ import { revalidatePath } from "next/cache";
 import { connectToDB } from "../mongoose";
 
 import User from "../models/user.model";
-import Ripple from "../models/ripple.model"; 
+import Ripple from "../models/ripple.model";
 import Community from "../models/community.model";
+import mongoose from "mongoose";
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   connectToDB();
@@ -239,15 +240,3 @@ export async function addCommentToRipple(
   }
 }
 
-export const getCommentOfUser = async (userId:string) => {
-  try {
-    connectToDB()
-
-    const comments = await Ripple.find({author: userId})
-
-    
-    return comments
-  } catch (error:any) {
-    throw new Error(`Failed to fetch comments: ${error.message}`)
-  }
-}

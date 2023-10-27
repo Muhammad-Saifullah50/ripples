@@ -6,8 +6,6 @@ import { redirect } from 'next/navigation'
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs"
 import { profileTabs } from "@/constants"
 import Image from "next/image"
-import RippleCard from "@/components/cards/RippleCard"
-import { getCommentOfUser } from "@/lib/actions/ripple.actions"
 
 const ProfilePage = async ({ params }: { params: { id: string } }) => {
 
@@ -15,12 +13,9 @@ const ProfilePage = async ({ params }: { params: { id: string } }) => {
   if (!user) return null
 
   const userInfo = await fetchUser(params.id)
-  console.log(userInfo, 'userinfo')
 
   if (!userInfo?.onboarded) redirect('/onboarding')
 
-  const comments = await getCommentOfUser(params.id)
-  console.log(comments, 'comments')
   return (
     <section>
       <ProfileHeader
@@ -70,11 +65,7 @@ const ProfilePage = async ({ params }: { params: { id: string } }) => {
             value="replies"
             className="w-full text-light-1"
           >
-            <RippleTab
-              currentUserId={user.id}
-              accountId={userInfo.id}
-              accountType="User"
-            />
+           Coming Soon ...
           </TabsContent>
 
 

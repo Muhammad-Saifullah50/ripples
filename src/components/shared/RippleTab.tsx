@@ -32,7 +32,11 @@ const RippleTab = async ({ currentUserId, accountId, accountType }: Props) => {
                             ? { name: result.name, image: result.image, id: result.id }
                             : { name: ripple.author.name, image: ripple.author.image, id: ripple.author.id }
                     }
-                    community={ripple?.community}
+                    community={
+                        accountType === 'Community'
+                        ? {name: result.name, id: result.id, image: result.image}
+                        : ripple.community
+                    }
                     createdAt={ripple?.createdAt}
                     comments={ripple?.children}
                 />

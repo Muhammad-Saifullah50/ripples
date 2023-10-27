@@ -1,5 +1,6 @@
 import CommunityCard from "@/components/cards/CommunityCard"
 import UserCard from "@/components/cards/UserCard"
+import Pagination from "@/components/shared/Pagination"
 import SearchBar from "@/components/shared/SearchBar"
 import { fetchCommunities } from "@/lib/actions/community.actions"
 import { fetchUser, fetchUsers } from "@/lib/actions/user.actions"
@@ -18,8 +19,8 @@ const CommunityPage = async ({ searchParams }: { searchParams: { [key: string]: 
   // fetch all communities
   const result = await fetchCommunities({
     searchString: searchParams?.q || '',
-    pageNumber: 1,
-    pageSize: 25
+    pageNumber: searchParams?.page ? +searchParams?.page : 1,
+    pageSize: 10
   })
   return (
     <section>
@@ -33,20 +34,29 @@ const CommunityPage = async ({ searchParams }: { searchParams: { [key: string]: 
           <p className="no-result">No communities found</p>
         ) : (
           <>
-            {result.communities.map((community) => (
-              <CommunityCard
-                key={community.id}
-                id={community.id}
-                name={community.name}
-                username={community.username}
-                imgUrl={community.image}
-                bio={community.bio}
-                members={community.members}
-              />
-            ))}
+            {result.communities.map((community) => {
+              // console.log(community, 'community')
+              return (
+                <CommunityCard
+                  key={community.id}
+                  id={community.id}
+                  name={community.name}
+                  username={community.username}
+                  imgUrl={community.image}
+                  bio={community.bio}
+                  members={community.members}
+                />
+              )
+            })}
           </>
         )}
       </div>
+
+      <Pagination
+        pageNumber={searchParams?.page ? +searchParams?.page : 1}
+        isNext={result.isNext}
+        path='communities'
+      />
     </section>
   )
 }
