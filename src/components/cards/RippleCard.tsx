@@ -1,6 +1,9 @@
 import { formatDateString } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
+import DeleteRipple from "../forms/DeleteRipple"
+import ShareRipple from "../shared/ShareRipple"
+import { LikeRipple } from "../shared"
 
 interface Props {
   id: string
@@ -48,45 +51,33 @@ const RippleCard = ({ id, currentUserId, parentId, content, author, community, c
           <div className="flex w-full flex-col">
             <Link href={`/profile/${author?.id}`} className="w-fit flex gap-10">
               <h4 className="cursor-pointer text-base-semibold text-light-1">{author.name}</h4>
-              <p className="text-gray-600 text-small-regular">{createdAt.toLocaleString().slice(11, 16) + (createdAt.toLocaleString().slice(-2) === 'AM' ? ' AM' : ' PM')}</p>
+              <p className="text-gray-600 text-small-regular">{(formatDateString(createdAt))}</p>
 
             </Link>
 
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
 
             <div className="mt-5 flex flex-col gap-3">
-              <div className="flex gap-3.5">
-                <Image
-                  src='/assets/heart-gray.svg'
-                  alt="heart"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                />
-                <Link href={`/ripple/${id}`}>
-                  <Image
-                    src='/assets/reply.svg'
-                    alt="reply"
-                    width={24}
-                    height={24}
-                    className="cursor-pointer object-contain"
-                  />
-                </Link>
+              <div className="flex gap-5">
 
-                <Image
-                  src='/assets/repost.svg'
-                  alt="repost"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                />
-                <Image
-                  src='/assets/share.svg'
-                  alt="share"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                />
+                <LikeRipple rippleId={id}/>
+
+                <div className="group flex flex-col">
+                  <Link href={`/ripple/${id}`}>
+                    <Image
+                      src='/assets/reply.svg'
+                      alt="reply"
+                      width={24}
+                      height={24}
+                      className="cursor-pointer object-contain"
+                    />
+                  </Link>
+                  <div className="hidden group-hover:flex absolute z-50 text-[10px] text-light-1 mt-7 -ml-2">
+                    <p >Comment</p>
+                  </div>
+                </div>
+
+                <ShareRipple rippleId={id}/>
               </div>
 
               {isComment && comments.length > 0 && (
@@ -97,23 +88,55 @@ const RippleCard = ({ id, currentUserId, parentId, content, author, community, c
             </div>
           </div>
         </div>
+        <DeleteRipple
+          rippleId={JSON.stringify(id)}
+          currentUserId={currentUserId}
+          authorId={author.id}
+          parentId={parentId}
+          isComment={isComment}
+        />
       </div>
-      {!isComment && community && (
-          <Link
-            href={`/communities/${community?.id}`}
-            className="mt-5 flex items-center">
-            <p className="text-subtle-medium text-gray-1">
-              {formatDateString(createdAt)}  {' '}- {community?.name} Community
-            </p>
+
+      {!isComment && comments.length > 0 && (
+        <div className="ml-1 mt-3 flex items-center gap-2" >
+          {comments.slice(0, 2).map((comment, index) => (
             <Image
-              src={community.image}
-              alt="image"
-              width={14}
-              height={14}
-              className="object-cover rounded-full ml-1"
+              key={index}
+              src={comment.author.image}
+              alt={`user_${index}`}
+              width={24}
+              height={24}
+              className={`${index !== 0 && '-ml-5'} rounded-full object-cover`}
+
             />
+          ))}
+
+          <Link
+            href={`ripple/${id}`}>
+            <p className="mt-1 text-subtle-medium text-gray-1">
+
+              {comments.length} repl{comments.length > 1 ? 'ies' : 'y'}
+            </p>
           </Link>
-        )}
+
+        </div>
+      )}
+      {!isComment && community && (
+        <Link
+          href={`/communities/${community?.id}`}
+          className="mt-5 flex items-center">
+          <p className="text-subtle-medium text-gray-1">
+            {formatDateString(createdAt)}  {' '}- {community?.name} Community
+          </p>
+          <Image
+            src={community.image}
+            alt="image"
+            width={14}
+            height={14}
+            className="object-cover rounded-full ml-1"
+          />
+        </Link>
+      )}
     </article>
   )
 }

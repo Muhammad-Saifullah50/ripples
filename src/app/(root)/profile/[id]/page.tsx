@@ -65,7 +65,12 @@ const ProfilePage = async ({ params }: { params: { id: string } }) => {
             value="replies"
             className="w-full text-light-1"
           >
-           Coming Soon ...
+           <RippleTab
+              currentUserId={user.id}
+              accountId={userInfo.id}
+              accountType="User"
+              areComments
+            />
           </TabsContent>
 
 

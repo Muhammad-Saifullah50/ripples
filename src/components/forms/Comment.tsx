@@ -69,7 +69,7 @@ const Comment = ({ rippleId, currentUserImage, currentUserId }: Props) => {
                 />
                 <Button
                     type="submit"
-                    className="bg-primary-500 comment-form_btn">Reply</Button>
+                    className="bg-primary-500 comment-form_btn hover:bg-tertiary-500">Reply</Button>
             </form>
 
         </Form >

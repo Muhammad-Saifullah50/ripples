@@ -4,6 +4,7 @@ import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 import ProfileHeader from "./ProfileHeader";
 import RippleTab from "./RippleTab";
+import LikeRipple from "./LikeRipple";
 
 export {
     Topbar,
@@ -11,5 +12,6 @@ export {
     LeftSidebar,
     RightSidebar,
     ProfileHeader,
-    RippleTab
+    RippleTab,
+    LikeRipple
 }

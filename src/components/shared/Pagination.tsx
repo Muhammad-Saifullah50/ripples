@@ -37,16 +37,18 @@ const Pagination = ({ pageNumber, isNext, path }: Props) => {
                 className="!text-small-regular text-light-2 bg-primary-500 hover:bg-tertiary-500"
                 disabled={pageNumber === 1}
                 onClick={() => handleNavigation('prev')}
+                size='sm'
             >
-                Previous Page
+                Previous 
             </Button>
             <p className="!text-small-semibold text-light-1">Page {pageNumber}</p>
             <Button
                 className="!text-small-regular text-light-2 bg-primary-500 hover:bg-tertiary-500"
                 disabled={!isNext}
                 onClick={() => handleNavigation('next')}
+                size="sm"
             >
-                Next Page
+                Next
             </Button>
         </div>
     )
