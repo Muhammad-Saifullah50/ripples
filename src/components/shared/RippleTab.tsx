@@ -44,11 +44,12 @@ const RippleTab = async ({
             {areComments ? (
                 userRipplesWithComments?.map((comment: any) => {
                     return (
-                        <div>
+                        <div key={comment?._id}>
                             {comment.children.map((child: any) => {
                                 // console.log(child, 'child')
                                 return (
                                     <CommentCard
+                                    key={child?._id}
                                         text={child.text}
                                         name={child.author.name}
                                         createdAt={child.createdAt}
