@@ -8,6 +8,7 @@ import User from "../models/user.model";
 import Ripple from "../models/ripple.model";
 import Community from "../models/community.model";
 import mongoose from "mongoose";
+import { notFound } from "next/navigation";
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   connectToDB();
@@ -196,6 +197,7 @@ export async function fetchRippleById(rippleId: string) {
 
     return ripple;
   } catch (err) {
+    if (err) notFound()
     console.error("Error while fetching ripple", err);
     throw new Error("Unable to fetch ripple");
   }
