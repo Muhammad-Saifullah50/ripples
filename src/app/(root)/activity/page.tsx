@@ -5,7 +5,7 @@ import Link from "next/link"
 import { redirect } from 'next/navigation'
 const ActivityPage = async () => {
   const user = await currentUser()
-  if (!user) return null
+  if (!user) redirect('/sign-up')
 
   const userInfo = await fetchUser(user.id)
 
