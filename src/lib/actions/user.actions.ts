@@ -8,7 +8,7 @@ import Ripple from "../models/ripple.model";
 import User from "../models/user.model";
 
 import { connectToDB } from "../mongoose";
-
+import {redirect} from 'next/navigation'
 export async function fetchUser(userId: string) {
   try {
     connectToDB();
@@ -18,6 +18,7 @@ export async function fetchUser(userId: string) {
       model: Community,
     });
   } catch (error: any) {
+    redirect("/sign-up");
     throw new Error(`Failed to fetch user: ${error.message}`);
   }
 }
