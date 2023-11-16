@@ -112,7 +112,7 @@ const RippleCard = ({ id, currentUserId, parentId, content, author, community, c
           ))}
 
           <Link
-            href={`ripple/${id}`}>
+            href={`/ripple/${id}`}>
             <p className="mt-1 text-subtle-medium text-gray-1">
 
               {comments.length} repl{comments.length > 1 ? 'ies' : 'y'}
