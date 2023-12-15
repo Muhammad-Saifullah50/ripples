@@ -8,7 +8,6 @@ import { redirect } from "next/navigation"
 export default async function Home({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
 
   const user = await currentUser()
-  if (!user) return null
 
   const userInfo = await fetchUser(user.id)
   const result = await fetchPosts(searchParams?.page ? +searchParams?.page : 1, 20)
