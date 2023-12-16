@@ -9,7 +9,8 @@ export default async function Home({ searchParams }: { searchParams: { [key: str
 
   const user = await currentUser()
 
-  const userInfo = await fetchUser(user.id)
+  let userInfo = await fetchUser(user?.id)  
+
   const result = await fetchPosts(searchParams?.page ? +searchParams?.page : 1, 20)
 
 

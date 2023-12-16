@@ -9,7 +9,7 @@ import User from "../models/user.model";
 
 import { connectToDB } from "../mongoose";
 import {redirect} from 'next/navigation'
-export async function fetchUser(userId: string) {
+export async function fetchUser(userId: string  | undefined) {
   try {
     connectToDB();
 
@@ -18,6 +18,7 @@ export async function fetchUser(userId: string) {
       model: Community,
     });
   } catch (error: any) {
+    return null
     throw new Error(`Failed to fetch user: ${error.message}`);
   }
 }
